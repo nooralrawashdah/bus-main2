@@ -189,10 +189,15 @@
 <body>
 
     <!-- Navbar -->
+    @php
+    $pageName = request()->segment(2);
+    $pageName = str_replace('-', '', $pageName);
+@endphp
     <nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('manager.mdashboard') }}">
-                🚌 Bus Manager
+            <a class="navbar-brand" href="#">
+             🚌 
+                {{ucwords( $pageName)}}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
