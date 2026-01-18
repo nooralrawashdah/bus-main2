@@ -82,10 +82,35 @@ class DriverController extends Controller
             'readyToStart' => $isFull
         ];
     }
+//هي مشان يبدأ الرحلة اذا صار الوقت المحدد بدون ما يكونوا المقاعد مليانة 
+ public function startTrip(Trip $trip)
+    {
+       $currentTime=Carbon::now(); //  هي تتحقق من الوقت
+        $tripDate=Carbon::parse($trip->trip_date);
+         $tripTime=Carbon::parse($trip->start_time);
 
+        if ($currentTime->toDateString() == $tripDate->toDateString() && $currentTime->toTimeString() >= $tripTime->toTimeString()) {
+
+        $trip->status = 'STARTED';
+        $trip->save();
+
+        return redirect()->back()->with('success', 'The trip started');
+    }
+
+    return redirect()->back()->with('error', 'Its not time to start this trip yet');
+
+
+
+    }
+
+
+
+/*
     public function startTrip(Trip $trip)
     {
-        $seatStatus = $this->checkSeatStatus($trip);
+
+
+        $seatStatus = $this->checkSeatStatus($trip); // استدعيت الmetod  تبعت المقاعد مشان ابدا رحلة ولا لا
 
         if ($seatStatus['readyToStart']) {
             $trip->status = 'STARTED';
@@ -95,5 +120,5 @@ class DriverController extends Controller
         }
 
         return redirect()->back()->with('error', 'The bus is not full yet. All seats must be booked to start.');
-    }
+    }*/
 }

@@ -6,7 +6,7 @@
             <h2 class="page-title">Available Trips</h2>
         </div>
 
-        @if (isset($trips) && $trips->count() > 0)
+        @if (isset($trips) && $trips->count() > 0) {{-- isset  هي مشان اذا في قيمة ولا ما في قيمة --}}
             <div class="row g-4">
                 @foreach ($trips as $trip)
                     <div class="col-md-6 col-lg-4">
@@ -27,9 +27,17 @@
                             <p class="mb-1"><strong>Start:</strong> {{ $trip->start_time }}</p>
 
                             <div class="mt-4">
-                                <a href="{{ route('student.buses', $trip->id) }}" class="btn btn-premium w-100">
-                                    View Buses & Book
-                                </a>
+                                @if ($trip->status === 'STARTED')
+                                    {{-- زر أخضر Disabled --}}
+                                    <button class="btn btn-success w-100" disabled>
+                                        Trip Started
+                                    </button>
+                                @else
+                                    {{-- زر الحجز العادي --}}
+                                    <a href="{{ route('student.buses', $trip->id) }}" class="btn btn-premium w-100">
+                                        View Buses & Book
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>

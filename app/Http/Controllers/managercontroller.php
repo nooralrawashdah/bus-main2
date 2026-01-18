@@ -17,6 +17,7 @@ class ManagerController extends Controller
     public function __construct()
     {
         // Middleware is now handled in web.php
+        
     }
 
 

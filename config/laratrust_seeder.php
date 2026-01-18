@@ -19,7 +19,7 @@ return [
             'trip' => 'c,r,u,d',
             'route' => 'c,r,u,d',
             'seat' => 'c,r,u,d',
-            
+
 
         ],
         'driver' => [
@@ -37,6 +37,7 @@ return [
 
 
         ],
+        
         'role_name' => [
             'module_1_name' => 'c,r,u,d',
         ],

@@ -93,6 +93,7 @@ class Studentcontroller extends Controller
     {
         $trip = Trip::findOrFail($tripId);
         $bus = Bus::findOrFail($busId);
+       
 
         // نجيب المقاعد مع حالة حجزها في الرحلة دي
         $seats = BusSeat::where('bus_id', $busId)
@@ -110,7 +111,6 @@ class Studentcontroller extends Controller
         $student = Auth::user();
 
         return DB::transaction(function () use ($student, $tripId, $seatId) {
-            // 1. قفل السجلات لمنع التداخل (Race Condition)
             // نتحقق الأول إن الطالب معندوش حجز في نفس الرحلة
             $existing = Booking::where('user_id', $student->id)
                 ->where('trip_id', $tripId)
@@ -142,8 +142,50 @@ class Studentcontroller extends Controller
         });
     }
 
-    // تعديل الحجز
-    public function editReservation(Request $request, $bookingId)
+
+
+
+
+    // إلغاء الحجز
+    public function cancelReservation($bookingId)
+    {
+        $booking = Booking::findOrFail($bookingId);
+        $student = Auth::user();
+
+        if ($booking->user_id != $student->id) {
+            abort(403, 'Unauthorized');
+        }
+
+        $booking->delete();
+
+        return redirect()->route('student.reservations')->with('success', 'Reservation cancelled.');
+    }
+
+    // تعديل المنطقة/العنوان
+    public function updateProfile(Request $request)
+    {
+        $student = Auth::user();
+
+        $validated = $request->validate([
+            'region_id' => 'required|exists:regions,id',
+        ]);
+
+        $student->update($validated); // This updates the User model since Auth::user() returns User instance
+
+        return redirect()->route('student.profile')->with('success', 'Profile updated successfully.');
+    }
+
+    // صفحة البروفايل
+    public function profile()
+    {
+        $student = Auth::user();
+        $regions = Region::all();
+
+        return view('student.profile', compact('student', 'regions'));
+    }
+
+     // تعديل الحجز
+   /* public function editReservation(Request $request, $bookingId)
     {
         $request->validate([
             'seat_id' => 'required|exists:bus_seats,id',
@@ -173,44 +215,6 @@ class Studentcontroller extends Controller
             ]);
 
             return redirect()->route('student.dashboard')->with('success', 'Reservation updated successfully.');
-        });
-    }
+        });*/
 
-    // إلغاء الحجز
-    public function cancelReservation($bookingId)
-    {
-        $booking = Booking::findOrFail($bookingId);
-        $student = Auth::user();
-
-        if ($booking->user_id != $student->id) {
-            abort(403, 'Unauthorized');
-        }
-
-        $booking->delete();
-
-        return redirect()->route('student.dashboard')->with('success', 'Reservation cancelled.');
-    }
-
-    // تعديل المنطقة/العنوان
-    public function updateProfile(Request $request)
-    {
-        $student = Auth::user();
-
-        $validated = $request->validate([
-            'region_id' => 'required|exists:regions,id',
-        ]);
-
-        $student->update($validated); // This updates the User model since Auth::user() returns User instance
-
-        return redirect()->route('student.profile')->with('success', 'Profile updated successfully.');
-    }
-
-    // صفحة البروفايل
-    public function profile()
-    {
-        $student = Auth::user();
-        $regions = Region::all();
-
-        return view('student.profile', compact('student', 'regions'));
-    }
 }

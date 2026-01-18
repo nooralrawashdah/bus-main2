@@ -30,15 +30,15 @@
             <div class="card-body">
                 <form action="{{ route('drivers.store') }}" method="POST">
                     @csrf
-                    
+
                     <div class="row">
                         <!-- Personal Information -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Full Name *</label>
-                            <input type="text" class="form-control" name="name" required 
+                            <input type="text" class="form-control" name="name" required
                                    placeholder="e.g., Ahmed Mohammed">
                         </div>
-                        
+
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email *</label>
                             <input type="email" class="form-control" name="email" required
@@ -49,10 +49,10 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Phone Number *</label>
-                            <input type="tel" class="form-control" name="phone" required 
+                            <input type="tel" class="form-control" name="phone" required
                                    placeholder="e.g., 0551234567">
                         </div>
-                        
+
                         <div class="col-md-6 mb-3">
                             <label class="form-label">License Number *</label>
                             <input type="text" class="form-control" name="license_number" required
@@ -65,10 +65,10 @@
                             <label class="form-label">License Expiry Date</label>
                             <input type="date" class="form-control" name="license_expiry">
                         </div>
-                        
+
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Hire Date</label>
-                            <input type="date" class="form-control" name="hire_date" 
+                            <input type="date" class="form-control" name="hire_date"
                                    value="{{ date('Y-m-d') }}">
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                                 <option value="3">BUS-103 (40 seats)</option>
                             </select>
                         </div>
-                        
+
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Status</label>
                             <select class="form-select" name="status">
@@ -117,11 +117,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control" name="emergency_name" 
+                                    <input type="text" class="form-control" name="emergency_name"
                                            placeholder="Contact Name">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <input type="tel" class="form-control" name="emergency_phone" 
+                                    <input type="tel" class="form-control" name="emergency_phone"
                                            placeholder="Contact Phone">
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // License number auto-format
+        // License number auto-format مشان رقم الرخصة
         document.querySelector('[name="license_number"]').addEventListener('input', function(e) {
             let value = e.target.value.toUpperCase();
             if (!value.startsWith('DRV-')) {

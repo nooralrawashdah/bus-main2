@@ -8,7 +8,7 @@ use App\Http\Controllers\DriverController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/', function () {
     return view('auth.login');
@@ -93,7 +93,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/trips/{trip}/buses/{bus}/seats', [App\Http\Controllers\Studentcontroller::class, 'seats'])->name('student.seats');
 
     Route::post('/student/trips/{trip}/seats/{seat}', [App\Http\Controllers\Studentcontroller::class, 'reserveSeat'])->name('student.reserve');
-    Route::put('/student/reservations/{booking}', [App\Http\Controllers\Studentcontroller::class, 'editReservation'])->name('student.reservations.update');
+     Route::put('/student/reservations/{booking}/edit', [App\Http\Controllers\Studentcontroller::class, 'editReservation'])->name('student.reservations.update');
     Route::delete('/student/reservations/{booking}', [App\Http\Controllers\Studentcontroller::class, 'cancelReservation'])->name('student.reservations.cancel');
 
     Route::get('/student/profile', [App\Http\Controllers\Studentcontroller::class, 'profile'])->name('student.profile');

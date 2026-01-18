@@ -17,7 +17,7 @@
     @endif
 
     <div class="row">
-        <div class="col-md-9"> {{-- زدت العرض قليلاً ليناسب الأعمدة الإضافية --}}
+        <div class="col-md-9">
             <div class="glass-card">
                 <h4 class="mb-4" style="color:var(--text-main);">Available Routes</h4>
                 <div class="table-responsive">
